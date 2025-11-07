@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // no 1 (sofi)
+      class Character {
+        constructor(name, power, attack, defense, ultimateAttack) {
+          this.name = name;
+          this.power = power;
+          this.attack = attack;
+          this.defense = defense;
+          this.ultimateAttack = ultimateAttack;
+          this.hasUsedUltimate = false;
+        }
+
+        attackOpponent(opponent) {
+          const damage = Math.floor(Math.random() * 20) + 10;
+          opponent.power -= damage;
+          alert(
+            `${this.name} menyerang dengan ${this.attack}!\n
+             ${opponent.name} menerima damage: ${damage}\n
+             power ${opponent.name} tersisa: ${opponent.power}`
+          );
+        }
+
+        // no 2 (divo)
+        defend() {
+          const shield = Math.floor(Math.random() * 10) + 5;
+          this.power += shield;
+          alert(
+            `${this.name} bertahan dengan ${this.defense}!\n
+            meningkatkan kekuatan sebesar: ${shield}\n
+            power ${this.name} sekarang: ${this.power}`
+          );
+        }
+
+        useUltimate(opponent) {
+          if (!this.hasUsedUltimate) {
+            const damage = Math.floor(Math.random() * 50) + 50;
+            opponent.power -= damage;
+            this.hasUsedUltimate = true;
+            alert(
+              `${this.name} menggunakan ultimate attack: ${this.ultimateAttack}!\n
+              ${opponent.name} menerima damage: ${damage}\n
+              power ${opponent.name} tersisa: ${opponent.power}`
+            );
+          } else {
+            alert(`${this.name} sudah menggunakan ultimate attack sebelumnya!`);
+          }
+        }
+
+        // no 3 & 4 (nopal & intan)
+        chooseAction() {
+          let action = prompt(
+            `${this.name}, pilih aksi:\n
+            1. serang\n
+            2. bertahan\n
+            3. ultimate attack`
+          );
+          if (action === "1") {
+            return "attack";
+          } else if (action === "2") {
+            return "defend";
+          } else if (action === "3") {
+            return "ultimate";
+          }
+        }
+      }
+
+      const characters = [
+        new Character("naruto", 100, "rasengan", "shadow clone jutsu", "tailed beast bomb"),
+        new Character("sasuke", 100, "chidori", "susanoo", "amaterasu"),
+        new Character("sakura", 100, "cherry blossom impact", "healing jutsu", "mitotic regeneration"),
+        new Character("kakashi", 100, "chidori", "kamui", "kirin"),
+        new Character("hinata", 100, "8 trigrams 64 palms", "protection of the gentle fist", "twin lion fists"),
+      ];
+
+      // no 5 (tiara)
+      function chooseCharacter(player) {
+        let choice = prompt(
+          `${player}, pilih karakter untuk dimainkan:\n1. naruto\n2. sasuke\n3. sakura\n4. kakashi\n5. hinata
+        `);
+        return characters[choice - 1];
+      }
+
+      function game() {
+        alert(
+          "pemain pertama memilih karakter terlebih dahulu."
+        );
+
+        let player1 = chooseCharacter("player 1");
+        let player2 = chooseCharacter("player 2");
+
+        // no 6 (irsyad)
+        let round = 1;
+        while (player1.power > 0 && player2.power > 0) {
+          alert(`ronde ${round}`);
+
+          let action1 = player1.chooseAction();
+          if (action1 === "attack") {
+            player1.attackOpponent(player2);
+          } else if (action1 === "defend") {
+            player1.defend();
+          } else if (action1 === "ultimate") {
+            player1.useUltimate(player2);
+          }
+
+          if (player2.power <= 0) {
+            alert(`${player2.name} kalah! ${player1.name} menang!`);
+            break;
+          }
+
+          // no 7 (tasya)
+          let action2 = player2.chooseAction();
+          if (action2 === "attack") {
+            player2.attackOpponent(player1);
+          } else if (action2 === "defend") {
+            player2.defend();
+          } else if (action2 === "ultimate") {
+            player2.useUltimate(player1);
+          }
+
+          if (player1.power <= 0) {
+            alert(`${player1.name} kalah! ${player2.name} menang!`);
+            break;
+          }
+
+          round++;
+        }
+      }
+
+      game();
+    </script>
+  </body>
+</html>
